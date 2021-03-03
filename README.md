@@ -8,3 +8,5 @@ This project aims to provide a skeleton to develop spring boot backend applicati
 - ehcache configured.
 - environment specific properties file controlled using the env variable -Dspring.profiles.active=dev
 - Added configuration to provide war file as artifact in case if required.
+- Spring security configured.
+- Spring actuator enabled for all types.
