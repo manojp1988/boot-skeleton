@@ -22,12 +22,10 @@
             </timeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
     </appender>
-    <!-- LOG everything at INFO level -->
     <root level="info">
         <appender-ref ref="RollingFile"/>
         <appender-ref ref="Console"/>
     </root>
-    <!-- LOG "com.baeldung*" at TRACE level -->
     <logger name="org.hibernate.SQL" level="debug" additivity="false">
         <appender-ref ref="RollingFile"/>
         <appender-ref ref="Console"/>

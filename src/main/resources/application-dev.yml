@@ -6,7 +6,7 @@ spring:
     username: manojdev
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
     properties:
       javax:
         persistence:

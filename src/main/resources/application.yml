@@ -16,7 +16,7 @@ spring:
     username: manojdev
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
     properties:
       javax:
         persistence:
@@ -36,6 +36,13 @@ spring:
   cache:
     jcache:
       config: classpath:ehcache.xml
+  flyway:
+    url: jdbc:sqlserver://localhost:1433;databaseName=testdb
+    schemas: dbo
+    user: "manojdev"
+    password: "Qwerty@1"
+    baseline-on-migrate: true
+    locations: classpath:db/migration,classpath:db/repeatableScript
 
 management:
   endpoints:

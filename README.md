@@ -10,6 +10,7 @@ This project aims to provide a skeleton to develop spring boot backend applicati
 - Added configuration to provide war file as artifact in case if required.
 - Spring security configured.
 - Spring actuator enabled for all types.
+- Flyway db migration configured.
 
 ## Settings
 - To generate keystore run the following command.
