@@ -12,9 +12,11 @@
     <artifactId>boot</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>boot</name>
+    <packaging>war</packaging>
     <description>Demo project for Spring Boot</description>
     <properties>
         <java.version>1.8</java.version>
+        <tests.skip>true</tests.skip>
     </properties>
     <dependencies>
         <dependency>
@@ -95,6 +97,15 @@
                     </excludes>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skipTests>${tests.skip}</skipTests>
+                </configuration>
+            </plugin>
+
         </plugins>
     </build>
 

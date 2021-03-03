@@ -4,7 +4,7 @@
     <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.classic.PatternLayout">
             <Pattern>
-                %date %green(%level) %yellow([%thread]) %cyan(%logger{10}:%line: %8mdc{UUID})  %msg%n
+                %date %green(%level) %yellow([%thread]) %cyan(%logger{10}:%line)  %msg%n
             </Pattern>
         </layout>
     </appender>

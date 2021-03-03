@@ -1,0 +1,34 @@
+spring:
+  datasource:
+    driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    password: Qwerty@1
+    url: jdbc:sqlserver://localhost:1433;databaseName=testdb
+    username: manojdev
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      javax:
+        persistence:
+          sharedCache:
+            mode: ENABLE_SELECTIVE
+      hibernate:
+        format_sql: false
+        dialect: org.hibernate.dialect.SQLServerDialect
+        generate_statistics: false
+        javax.cache:
+          provider: org.ehcache.jsr107.EhcacheCachingProvider
+        cache:
+          use_second_level_cache: true
+          use_query_cache: true
+          region:
+            factory_class: jcache
+  cache:
+    jcache:
+      config: classpath:ehcache.xml
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
