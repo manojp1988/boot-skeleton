@@ -42,6 +42,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/actuator/**").permitAll()
                     .anyRequest().authenticated()
                 .and()
+                .csrf().disable()
+                .cors().disable()
                 .headers()
                     .contentSecurityPolicy("script-src 'self';");
     }

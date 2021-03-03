@@ -10,3 +10,9 @@ This project aims to provide a skeleton to develop spring boot backend applicati
 - Added configuration to provide war file as artifact in case if required.
 - Spring security configured.
 - Spring actuator enabled for all types.
+
+## Settings
+- To generate keystore run the following command.
+         
+        keytool -genkeypair -alias tomcat -keyalg RSA -keysize 2048 -storetype PKCS12 -keystore keystore.p12 -validity 3650 -storepass password
+  
