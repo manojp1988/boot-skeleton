@@ -21,4 +21,10 @@ public class UserData implements Serializable {
     private String password;
     private String name;
 
+    public String[] getAuthorities() {
+        return new String[] {
+                "ADMIN"
+        };
+    }
+
 }

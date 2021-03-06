@@ -1,4 +1,4 @@
-package com.example.boot.data.repo;
+package com.example.boot.data.repository;
 
 import com.example.boot.data.entity.UserData;
 import org.springframework.data.repository.CrudRepository;

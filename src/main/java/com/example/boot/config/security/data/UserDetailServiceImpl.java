@@ -1,7 +1,7 @@
-package com.example.boot.config.security;
+package com.example.boot.config.security.data;
 
-import com.example.boot.data.repo.UserRepository;
 import com.example.boot.data.entity.UserData;
+import com.example.boot.data.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,9 +29,9 @@ public class UserDetailServiceImpl implements UserDetailsService {
         final UserData customUser = userRepository.findByEmail(username);
 
         return User.builder()
-                   .username(customUser.getName())
+                   .username(customUser.getEmail())
                    .password(encoder.encode(customUser.getPassword()))
-                   .roles("ADMIN")
+                   .roles(customUser.getAuthorities())
                    .build();
     }
 }

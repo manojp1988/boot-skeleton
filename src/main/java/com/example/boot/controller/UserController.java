@@ -1,6 +1,6 @@
 package com.example.boot.controller;
 
-import com.example.boot.model.Credentials;
+import com.example.boot.config.security.model.ResetCredentials;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +17,7 @@ public class UserController {
     }
 
     @PostMapping("/resetPassword")
-    public boolean resetPassword(@RequestBody final Credentials cred) {
+    public boolean resetPassword(@RequestBody final ResetCredentials cred) {
         return true;
     }
 }
