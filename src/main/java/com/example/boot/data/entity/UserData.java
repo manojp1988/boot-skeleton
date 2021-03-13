@@ -21,6 +21,9 @@ public class UserData implements Serializable {
     private String password;
     private String name;
 
+    @Transient
+    private String token;
+
     public String[] getAuthorities() {
         return new String[] {
                 "ADMIN"

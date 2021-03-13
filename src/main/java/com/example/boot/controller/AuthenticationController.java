@@ -13,10 +13,13 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/security", method = RequestMethod.GET)
+@RequestMapping(value = "/security")
 public class AuthenticationController {
 
     private AuthenticationManager authenticationManager;
@@ -54,8 +57,9 @@ public class AuthenticationController {
         }
 
         final String token = jwtUtil.generateToken((String) username, 30 * 60 * 1000);
+        userData.setToken(token);
 
-        return new ResponseEntity<>(new JwtResponse(token), HttpStatus.OK);
+        return new ResponseEntity<>(new JwtResponse(userData), HttpStatus.OK);
     }
 
 }
