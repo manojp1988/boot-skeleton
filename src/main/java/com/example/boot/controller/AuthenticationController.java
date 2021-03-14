@@ -2,6 +2,7 @@ package com.example.boot.controller;
 
 import com.example.boot.config.security.JWTUtil;
 import com.example.boot.config.security.model.Credentials;
+import com.example.boot.config.security.model.ResetCredentials;
 import com.example.boot.data.entity.UserData;
 import com.example.boot.data.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +12,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/security")
@@ -47,8 +44,7 @@ public class AuthenticationController {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        User principal = (User) authentication.getPrincipal();
-        final String username = principal.getUsername();
+        final String username = (String) authentication.getPrincipal();
 
         final UserData userData = userRepository.findByEmail(username);
         if (userData == null) {
@@ -61,4 +57,13 @@ public class AuthenticationController {
         return new ResponseEntity<>(userData, HttpStatus.OK);
     }
 
+    @GetMapping("/forgotPassword/{email}")
+    public boolean forgotPassword(@PathVariable("email") final String email) {
+        return true;
+    }
+
+    @PostMapping("/resetPassword")
+    public boolean resetPassword(@RequestBody final ResetCredentials cred) {
+        return true;
+    }
 }

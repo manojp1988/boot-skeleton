@@ -1,11 +1,10 @@
 package com.example.boot.config.security;
 
+import com.example.boot.config.security.service.CustomAuthenticationManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -18,35 +17,30 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private UserDetailsService userDetailsService;
     private JwtAuthenticationFilter jwtAuthenticationFilter;
-    private CORSFilter corsFilter;
+    private CustomAuthenticationManager authenticationManager;
 
 
     @Autowired
     SecurityConfig(@Qualifier("userDetailServiceImpl") UserDetailsService userDetailsService,
                    JwtAuthenticationFilter jwtAuthenticationFilter,
-                   CORSFilter corsFilter) {
+                   CustomAuthenticationManager authenticationManager) {
+
         this.userDetailsService = userDetailsService;
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
-
-        this.corsFilter = corsFilter;
+        this.authenticationManager = authenticationManager;
     }
-
-    @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
-
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService);
+        auth.parentAuthenticationManager(authenticationManager);
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
+                //.cors().and()
                 .httpBasic()
                 .and()
                 .sessionManagement()
@@ -57,7 +51,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                     .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                    .antMatchers("/forgotPassword/**").permitAll()
+                    .antMatchers("/security/forgotPassword/**").permitAll()
+                    .antMatchers("/security/resetPassword").permitAll()
                     .antMatchers("/actuator/**").permitAll()
                     .antMatchers("/security/login").permitAll()
                     .anyRequest().authenticated()
@@ -66,4 +61,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers()
                     .contentSecurityPolicy("script-src 'self';");
     }
+
+//    @Bean
+//    public CorsConfigurationSource corsConfigurationSource() {
+//        CorsConfiguration configuration = new CorsConfiguration();
+//        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
+//        configuration.setAllowedMethods(Arrays.asList("PUT", "POST", "GET", "DELETE", "OPTIONS"));
+//        configuration.setMaxAge(3600L);
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", configuration);
+//        return source;
+//    }
 }

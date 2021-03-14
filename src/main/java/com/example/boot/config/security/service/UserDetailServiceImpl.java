@@ -1,4 +1,4 @@
-package com.example.boot.config.security.data;
+package com.example.boot.config.security.service;
 
 import com.example.boot.data.entity.UserData;
 import com.example.boot.data.repository.UserRepository;

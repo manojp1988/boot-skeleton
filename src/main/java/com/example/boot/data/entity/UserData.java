@@ -2,9 +2,14 @@ package com.example.boot.data.entity;
 
 import lombok.Data;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @Entity(name = "User")
@@ -30,4 +35,9 @@ public class UserData implements Serializable {
         };
     }
 
+    public List<? extends GrantedAuthority> getGrantedAuthorities() {
+        return Arrays.stream(getAuthorities())
+                     .map(SimpleGrantedAuthority::new)
+                     .collect(Collectors.toList());
+    }
 }
