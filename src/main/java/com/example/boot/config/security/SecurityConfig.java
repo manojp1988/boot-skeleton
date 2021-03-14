@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,20 +18,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private UserDetailsService userDetailsService;
     private JwtAuthenticationFilter jwtAuthenticationFilter;
+    private CORSFilter corsFilter;
 
+
+    @Autowired
+    SecurityConfig(@Qualifier("userDetailServiceImpl") UserDetailsService userDetailsService,
+                   JwtAuthenticationFilter jwtAuthenticationFilter,
+                   CORSFilter corsFilter) {
+        this.userDetailsService = userDetailsService;
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+
+        this.corsFilter = corsFilter;
+    }
 
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
-    }
-
-    @Autowired
-    SecurityConfig(@Qualifier("userDetailServiceImpl") UserDetailsService userDetailsService,
-                   JwtAuthenticationFilter jwtAuthenticationFilter) {
-        this.userDetailsService = userDetailsService;
-        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
-
     }
 
 
@@ -52,6 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .anyRequest().requiresSecure()
                 .and()
                 .authorizeRequests()
+                    .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                     .antMatchers("/forgotPassword/**").permitAll()
                     .antMatchers("/actuator/**").permitAll()
                     .antMatchers("/security/login").permitAll()

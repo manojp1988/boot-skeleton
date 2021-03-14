@@ -2,7 +2,6 @@ package com.example.boot.controller;
 
 import com.example.boot.config.security.JWTUtil;
 import com.example.boot.config.security.model.Credentials;
-import com.example.boot.config.security.model.JwtResponse;
 import com.example.boot.data.entity.UserData;
 import com.example.boot.data.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +36,7 @@ public class AuthenticationController {
     }
 
     @PostMapping(value = "/login")
-    public ResponseEntity<JwtResponse> login(@RequestBody Credentials credentials) {
+    public ResponseEntity<UserData> login(@RequestBody Credentials credentials) {
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -59,7 +58,7 @@ public class AuthenticationController {
         final String token = jwtUtil.generateToken((String) username, 30 * 60 * 1000);
         userData.setToken(token);
 
-        return new ResponseEntity<>(new JwtResponse(userData), HttpStatus.OK);
+        return new ResponseEntity<>(userData, HttpStatus.OK);
     }
 
 }

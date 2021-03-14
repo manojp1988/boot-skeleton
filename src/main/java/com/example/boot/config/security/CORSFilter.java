@@ -18,10 +18,10 @@ public class CORSFilter extends OncePerRequestFilter {
 
         final String origin = "http://localhost:4200";
 
-        response.addHeader("Access-Control-Allow-Origin", "*");
+        response.addHeader("Access-Control-Allow-Origin", origin);
         response.setHeader("Access-Control-Allow-Credentials", "true");
         response.setHeader("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, OPTIONS");
-        response.setHeader("Access-Control-Allow-Headers", "Origin, Accept,X-Auth-Token, X-Refresh-Token, X-Requested-With, authorization, cache-control, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, X-Preview-Url");
+        response.setHeader("Access-Control-Allow-Headers", "Origin, Accept,X-Auth-Token, X-Refresh-Token, X-Requested-With, Authorization, Cache-control, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, X-Preview-Url");
         response.addHeader("Access-Control-Max-Age", "3600");
         response.addHeader("Access-Control-Expose-Headers", "Authorization, filename, X-Refresh-Token");
 
