@@ -5,6 +5,7 @@ import com.example.boot.config.security.model.Credentials;
 import com.example.boot.config.security.model.ResetCredentials;
 import com.example.boot.data.entity.UserData;
 import com.example.boot.data.repository.UserRepository;
+import com.example.boot.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,15 +21,18 @@ public class AuthenticationController {
 
     private AuthenticationManager authenticationManager;
     private UserRepository userRepository;
+    private AuthenticationService authenticationService;
     private JWTUtil jwtUtil;
 
     @Autowired
     AuthenticationController(AuthenticationManager authenticationManager,
                              UserRepository userRepository,
+                             AuthenticationService authenticationService,
                              JWTUtil jwtUtil) {
 
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
+        this.authenticationService = authenticationService;
         this.jwtUtil = jwtUtil;
     }
 
@@ -51,7 +55,7 @@ public class AuthenticationController {
             throw new IllegalArgumentException("Invalid user " + authentication.getPrincipal());
         }
 
-        final String token = jwtUtil.generateToken((String) username, 30 * 60 * 1000);
+        final String token = jwtUtil.generateToken(username, 30 * 60 * 1000);
         userData.setToken(token);
 
         return new ResponseEntity<>(userData, HttpStatus.OK);
@@ -59,7 +63,7 @@ public class AuthenticationController {
 
     @GetMapping("/forgotPassword/{email}")
     public boolean forgotPassword(@PathVariable("email") final String email) {
-        return true;
+        return authenticationService.updateNewPassword(email);
     }
 
     @PostMapping("/resetPassword")

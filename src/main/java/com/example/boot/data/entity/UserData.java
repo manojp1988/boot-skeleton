@@ -26,6 +26,9 @@ public class UserData implements Serializable {
     private String password;
     private String name;
 
+    @Column
+    private boolean passwordExpired;
+
     @Transient
     private String token;
 

@@ -1,11 +1,12 @@
 package com.example.boot.config.security.service;
 
-import com.example.boot.config.security.EncryptionUtil;
+import com.example.boot.config.security.PasswordUtil;
 import com.example.boot.data.entity.UserData;
 import com.example.boot.data.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.CredentialsExpiredException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -30,8 +31,12 @@ public class CustomAuthenticationManager implements AuthenticationManager {
 
         final UserData userData = userRepository.findByEmail( principal);
 
-        if(userData == null || !userData.getPassword().equals(EncryptionUtil.encrypt(credentials)))
+        if(userData == null || !userData.getPassword().equals(PasswordUtil.encrypt(credentials)))
             throw new BadCredentialsException("Either username or password is invalid");
+
+        if(userData.isPasswordExpired()) {
+            throw new CredentialsExpiredException("Password is expired");
+        }
 
         UsernamePasswordAuthenticationToken unameAuthentication = new UsernamePasswordAuthenticationToken(
                 userData.getEmail(), "", userData.getGrantedAuthorities());
