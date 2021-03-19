@@ -40,7 +40,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
-                //.cors().and()
                 .httpBasic()
                 .and()
                 .sessionManagement()
@@ -61,15 +60,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers()
                     .contentSecurityPolicy("script-src 'self';");
     }
-
-//    @Bean
-//    public CorsConfigurationSource corsConfigurationSource() {
-//        CorsConfiguration configuration = new CorsConfiguration();
-//        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
-//        configuration.setAllowedMethods(Arrays.asList("PUT", "POST", "GET", "DELETE", "OPTIONS"));
-//        configuration.setMaxAge(3600L);
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", configuration);
-//        return source;
-//    }
 }

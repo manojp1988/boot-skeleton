@@ -1,11 +1,39 @@
+create table Movies
+(
+    id          numeric(19, 0) identity not null,
+    createAt    datetime,
+    createdBy   varchar(255),
+    modifiedAt  datetime,
+    modifiedBy  varchar(255),
+    version     numeric(19, 0),
+    director    varchar(255),
+    name        varchar(255),
+    releaseDate datetime,
+    primary key (id)
+);
 
-CREATE TABLE [dbo].[movie](
-                              [id] [bigint] IDENTITY(1,1) NOT NULL,
-                              [name] [varchar](255) NULL,
-                              [release_date] [datetime2](7) NULL,
-                              PRIMARY KEY CLUSTERED
-                                  (
-                                   [id] ASC
-                                      )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-GO
+
+create table MoviesHistory
+(
+    id       numeric(19, 0) not null,
+    REV      int            not null,
+    REVTYPE  smallint,
+    director varchar(255),
+    name     varchar(255),
+    primary key (id, REV)
+);
+
+
+create table REVINFO (REV int identity not null, REVTSTMP numeric(19,0), primary key (REV));
+
+create table Users
+(
+    id              numeric(19, 0) identity not null,
+    email           varchar(255),
+    name            varchar(255),
+    password        varchar(255),
+    passwordExpired bit,
+    primary key (id)
+);
+
+alter table MoviesHistory add constraint FKayhcsevemuo0sqlhguhjkaj5d foreign key (REV) references REVINFO;

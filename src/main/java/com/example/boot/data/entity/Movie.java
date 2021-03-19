@@ -2,6 +2,8 @@ package com.example.boot.data.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,7 +13,8 @@ import java.util.Date;
 @Entity
 @NoArgsConstructor
 @Table(name = "Movies")
-public class Movie implements Serializable {
+@Audited
+public class Movie extends Auditable implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,6 +22,9 @@ public class Movie implements Serializable {
 
     private String name;
 
+    private String director;
+
+    @NotAudited
     private Date releaseDate;
 
     public Movie(String name, Date releaseDate) {

@@ -16,11 +16,15 @@ spring:
     username: manojdev
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: create-drop
       naming:
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     properties:
+      org:
+        hibernate:
+          envers:
+            audit_table_suffix: History
       javax:
         persistence:
           sharedCache:

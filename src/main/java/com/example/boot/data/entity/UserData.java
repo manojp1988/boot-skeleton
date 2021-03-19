@@ -1,5 +1,6 @@
 package com.example.boot.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.security.core.GrantedAuthority;
@@ -23,6 +24,8 @@ public class UserData implements Serializable {
     private Long id;
 
     private String email;
+
+    @JsonIgnore
     private String password;
     private String name;
 
@@ -38,6 +41,7 @@ public class UserData implements Serializable {
         };
     }
 
+    @JsonIgnore
     public List<? extends GrantedAuthority> getGrantedAuthorities() {
         return Arrays.stream(getAuthorities())
                      .map(SimpleGrantedAuthority::new)

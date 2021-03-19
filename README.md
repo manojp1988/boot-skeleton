@@ -13,6 +13,7 @@ This project aims to provide a skeleton to develop spring boot backend applicati
 - Flyway db migration configured.
 - JWT Based authentication added.
 - CORS Filter added.
+- Auditing capabilities added
 
 ## Settings
 - To generate keystore run the following command.
